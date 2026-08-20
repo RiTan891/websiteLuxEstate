@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxEstate - Premium Apartments | Элитная недвижимость</title>
+    <style>
+        :root {
+            --beige-light: #faf6f0;
+            --beige: #f0e8dc;
+            --beige-dark: #e0d5c5;
+            --beige-darker: #c9b99f;
+            --text-primary: #2c2420;
+            --text-secondary: #6b5d50;
+            --text-light: #8a7b6e;
+            --accent: #b8956e;
+            --accent-hover: #a07d56;
+            --white: #ffffff;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            background: var(--beige-light);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Шапка */
+        .header {
+            background: var(--white);
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .language-btn {
+            background: var(--beige);
+            border: 1px solid var(--beige-dark);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .language-btn:hover {
+            background: var(--beige-dark);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        /* Навигация */
+        .nav {
+            background: var(--white);
+            padding: 0.8rem 2rem;
+            border-bottom: 1px solid var(--beige);
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding-bottom: 0.2rem;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Основной контент */
+        .main-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Поиск и фильтры */
+        .search-section {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .search-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--text-secondary);
+        }
+
+        .filter-input,
+        .filter-select {
+            padding: 0.6rem;
+            border: 1px solid var(--beige-dark);
+            border-radius: 4px;
+            background: var(--beige-light);
+            transition: var(--transition);
+        }
+
+        .filter-input:focus,
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--white);
+        }
+
+        /* Карточки квартир */
+        .apartments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .apartment-card {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .apartment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .apartment-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .apartment-card:hover .apartment-image {
+            transform: scale(1.05);
+        }
+
+        .apartment-info {
+            padding: 1.5rem;
+        }
+
+        .apartment-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .apartment-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .apartment-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-item {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .feature-icon {
+            color: var(--accent);
+        }
+
+        .favorite-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-light);
+        }
+
+        .favorite-btn:hover,
+        .favorite-btn.active {
+            color: #e74c3c;
+            transform: scale(1.2);
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 8px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+            position: relative;
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--white);
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: var(--beige);
+            transform: rotate(90deg);
+        }
+
+        /* Фото модальное окно */
+        .photo-modal {
+            background: transparent;
+            cursor: zoom-out;
+        }
+
+        .photo-modal-content {
+            background: transparent;
+            max-width: 95%;
+            max-height: 95%;
+            position: relative;
+        }
+
+        .photo-modal img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+            transition: transform 0.3s;
+        }
+
+        .zoom-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.8rem;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .zoom-btn {
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .zoom-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.1);
+        }
+
+        /* Страница деталей квартиры */
+        .apartment-detail {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .detail-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .detail-info {
+            padding: 2rem;
+        }
+
+        .detail-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+            background: var(--beige-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        /* Формы авторизации */
+        .auth-form {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--beige-dark);
+            border-radius: 4px;
+            background: var(--beige-light);
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--white);
+        }
+
+        /* Личный кабинет */
+        .profile-section {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .favorites-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Уведомления */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 4px;
+            box-shadow: var(--shadow-hover);
+            border-left: 4px solid var(--accent);
+            animation: slideIn 0.3s;
+            z-index: 2000;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-list {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .filters {
+                grid-template-columns: 1fr;
+            }
+            
+            .apartments-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .detail-features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <a href="#" class="logo">Lux<span>Estate</span></a>
+        <div class="header-controls">
+            <button class="language-btn" id="languageToggle">EN</button>
+            <div class="auth-buttons">
+                <button class="btn btn-outline" onclick="showAuth('login')" data-ru="Войти" data-en="Login">Войти</button>
+                <button class="btn btn-primary" onclick="showAuth('register')" data-ru="Регистрация" data-en="Sign Up">Регистрация</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Навигация -->
+    <nav class="nav">
+        <ul class="nav-list">
+            <li><a href="#apartments" class="nav-link active" data-ru="Квартиры" data-en="Apartments">Квартиры</a></li>
+            <li><a href="#about" class="nav-link" data-ru="О нас" data-en="About Us">О нас</a></li>
+            <li><a href="#contact" class="nav-link" data-ru="Контакты" data-en="Contact">Контакты</a></li>
+            <li><a href="#" class="nav-link" onclick="showFavorites()" data-ru="Избранное" data-en="Favorites">Избранное</a></li>
+        </ul>
+    </nav>
+
+    <!-- Основной контент -->
+    <main class="main-content">
+        <!-- Поиск и фильтры -->
+        <section class="search-section" id="apartments">
+            <h2 class="search-title" data-ru="Поиск квартир" data-en="Search Apartments">Поиск квартир</h2>
+            <div class="filters">
+                <div class="filter-group">
+                    <label class="filter-label" data-ru="Город" data-en="City">Город</label>
+                    <select class="filter-select" id="filterCity">
+                        <option value="" data-ru="Все города" data-en="All Cities">Все города</option>
+                        <option value="moscow" data-ru="Москва" data-en="Moscow">Москва</option>
+                        <option value="spb" data-ru="Санкт-Петербург" data-en="Saint Petersburg">Санкт-Петербург</option>
+                        <option value="sochi" data-ru="Сочи" data-en="Sochi">Сочи</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label" data-ru="Минимальная цена" data-en="Min Price">Минимальная цена</label>
+                    <input type="number" class="filter-input" id="filterMinPrice" placeholder="$100,000">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label" data-ru="Максимальная цена" data-en="Max Price">Максимальная цена</label>
+                    <input type="number" class="filter-input" id="filterMaxPrice" placeholder="$1,000,000">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label" data-ru="Количество комнат" data-en="Bedrooms">Количество комнат</label>
+                    <select class="filter-select" id="filterRooms">
+                        <option value="" data-ru="Любое" data-en="Any">Любое</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4+</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label" data-ru="Площадь (м²)" data-en="Area (m²)">Площадь (м²)</label>
+                    <input type="number" class="filter-input" id="filterArea" placeholder="50">
+                </div>
+            </div>
+            <button class="btn btn-primary" style="margin-top: 1rem;" onclick="applyFilters()" data-ru="Применить фильтры" data-en="Apply Filters">Применить фильтры</button>
+        </section>
+
+        <!-- Список квартир -->
+        <section id="apartmentsList">
+            <div class="apartments-grid" id="apartmentsGrid">
+                <!-- Карточки будут добавлены через JavaScript -->
+            </div>
+        </section>
+
+        <!-- О нас -->
+        <section id="about" style="margin-top: 4rem; background: var(--white); padding: 3rem; border-radius: 8px; box-shadow: var(--shadow);">
+            <h2 style="margin-bottom: 1rem;" data-ru="О нашей компании" data-en="About Our Company">О нашей компании</h2>
+            <p style="color: var(--text-secondary);" data-ru="LuxEstate - ведущее агентство недвижимости, специализирующееся на продаже элитных квартир. Мы предлагаем только проверенные объекты с полным юридическим сопровождением. Наша команда профессионалов поможет вам найти идеальное жилье, соответствующее всем вашим требованиям."
+               data-en="LuxEstate is a leading real estate agency specializing in the sale of premium apartments. We offer only verified properties with full legal support. Our team of professionals will help you find the perfect home that meets all your requirements.">LuxEstate - ведущее агентство недвижимости, специализирующееся на продаже элитных квартир. Мы предлагаем только проверенные объекты с полным юридическим сопровождением. Наша команда профессионалов поможет вам найти идеальное жилье, соответствующее всем вашим требованиям.</p>
+        </section>
+
+        <!-- Контакты -->
+        <section id="contact" style="margin-top: 2rem; background: var(--white); padding: 3rem; border-radius: 8px; box-shadow: var(--shadow);">
+            <h2 style="margin-bottom: 1rem;" data-ru="Контакты" data-en="Contact Us">Контакты</h2>
+            <div style="color: var(--text-secondary);">
+                <p>📞 <span data-ru="Телефон:" data-en="Phone:">Телефон:</span> +7 (495) 123-45-67</p>
+                <p>📧 <span data-ru="Email:" data-en="Email:">Email:</span> info@luxestate.com</p>
+                <p>📍 <span data-ru="Адрес:" data-en="Address:">Адрес:</span> <span data-ru="Москва, ул. Тверская, 1" data-en="Moscow, Tverskaya St., 1">Москва, ул. Тверская, 1</span></p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Модальное окно авторизации -->
+    <div class="modal" id="authModal">
+        <div class="modal-content auth-form">
+            <button class="modal-close" onclick="closeModal('authModal')">×</button>
+            <h2 id="authTitle" style="margin-bottom: 1.5rem;" data-ru="Вход в систему" data-en="Login">Вход в систему</h2>
+            <form id="authForm" onsubmit="handleAuth(event)">
+                <div class="form-group">
+                    <label class="filter-label" data-ru="Email" data-en="Email">Email</label>
+                    <input type="email" class="form-input" id="authEmail" required>
+                </div>
+                <div class="form-group">
+                    <label class="filter-label" data-ru="Пароль" data-en="Password">Пароль</label>
+                    <input type="password" class="form-input" id="authPassword" required>
+                </div>
+                <div class="form-group" id="registerFields" style="display: none;">
+                    <label class="filter-label" data-ru="Имя" data-en="Name">Имя</label>
+                    <input type="text" class="form-input" id="authName">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;" id="authSubmitBtn" data-ru="Войти" data-en="Login">Войти</button>
+            </form>
+            <p style="margin-top: 1rem; text-align: center; font-size: 0.9rem;">
+                <a href="#" onclick="toggleAuthMode(event)" id="authToggleLink" style="color: var(--accent);" data-ru="Нет аккаунта? Зарегистрируйтесь" data-en="No account? Sign up">Нет аккаунта? Зарегистрируйтесь</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Модальное окно фотографии -->
+    <div class="modal photo-modal" id="photoModal" onclick="closePhotoModal(event)">
+        <div class="photo-modal-content" id="photoModalContent">
+            <button class="modal-close" onclick="closeModal('photoModal')" style="position: absolute; top: 10px; right: 10px;">×</button>
+            <img id="photoModalImage" src="" alt="Apartment photo">
+            <div class="zoom-controls" onclick="event.stopPropagation();">
+                <button class="zoom-btn" onclick="zoomPhoto(-1)">−</button>
+                <button class="zoom-btn" onclick="zoomPhoto(1)">+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно деталей квартиры -->
+    <div class="modal" id="apartmentDetailModal">
+        <div class="modal-content" style="max-width: 900px; width: 90%;">
+            <button class="modal-close" onclick="closeModal('apartmentDetailModal')">×</button>
+            <div id="apartmentDetailContent"></div>
+        </div>
+    </div>
+
+    <!-- Модальное окно избранного -->
+    <div class="modal" id="favoritesModal">
+        <div class="modal-content" style="max-width: 900px; width: 90%;">
+            <button class="modal-close" onclick="closeModal('favoritesModal')">×</button>
+            <div style="padding: 2rem;">
+                <h2 style="margin-bottom: 1.5rem;" data-ru="Избранные квартиры" data-en="Favorite Apartments">Избранные квартиры</h2>
+                <div class="favorites-list" id="favoritesList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Глобальное состояние
+        let currentLanguage = 'ru';
+        let currentUser = null;
+        let currentZoom = 1;
+        let authMode = 'login';
+        let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        let currentPhotoSrc = '';
+
+        // Данные квартир
+        const apartments = [
+            {
+                id: 1,
+                title: { ru: 'Просторная квартира в центре', en: 'Spacious apartment in the center' },
+                city: 'moscow',
+                price: 450000,
+                area: 85,
+                rooms: 3,
+                floor: 7,
+                totalFloors: 12,
+                balcony: true,
+                view: { ru: 'Панорамный вид на город', en: 'Panoramic city view' },
+                infrastructure: { ru: 'Развитая инфраструктура, метро в 5 минутах', en: 'Developed infrastructure, metro 5 minutes away' },
+                parking: true,
+                renovation: { ru: 'Дизайнерский ремонт', en: 'Designer renovation' },
+                images: [
+                    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop',
+                    'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop',
+                    'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=800&h=600&fit=crop'
+                ]
+            },
+            {
+                id: 2,
+                title: { ru: 'Уютная квартира у парка', en: 'Cozy apartment near the park' },
+                city: 'spb',
+                price: 280000,
+                area: 55,
+                rooms: 2,
+                floor: 3,
+                totalFloors: 9,
+                balcony: true,
+                view: { ru: 'Вид на парк', en: 'Park view' },
+                infrastructure: { ru: 'Парк, школы, магазины', en: 'Park, schools, shops' },
+                parking: false,
+                renovation: { ru: 'Евроремонт', en: 'European renovation' },
+                images: [
+                    'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop',
+                    'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=800&h=600&fit=crop'
+                ]
+            },
+            {
+                id: 3,
+                title: { ru: 'Люкс апартаменты с видом на море', en: 'Luxury apartment with sea view' },
+                city: 'sochi',
+                price: 650000,
+                area: 120,
+                rooms: 4,
+                floor: 15,
+                totalFloors: 20,
+                balcony: true,
+                view: { ru: 'Панорамный вид на море', en: 'Panoramic sea view' },
+                infrastructure: { ru: 'Пляж, рестораны, СПА', en: 'Beach, restaurants, SPA' },
+                parking: true,
+                renovation: { ru: 'Премиум отделка', en: 'Premium finishing' },
+                images: [
+                    'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800&h=600&fit=crop',
+                    'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&h=600&fit=crop',
+                    'https://images.unsplash.com/photo-1560184897-ae75f418493e?w=800&h=600&fit=crop'
+                ]
+            },
+            {
+                id: 4,
+                title: { ru: 'Современная студия', en: 'Modern studio apartment' },
+                city: 'moscow',
+                price: 180000,
+                area: 38,
+                rooms: 1,
+                floor: 5,
+                totalFloors: 17,
+                balcony: false,
+                view: { ru: 'Вид на город', en: 'City view' },
+                infrastructure: { ru: 'ТЦ, кафе, транспорт', en: 'Mall, cafes, transport' },
+                parking: false,
+                renovation: { ru: 'Современный ремонт', en: 'Modern renovation' },
+                images: [
+                    'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=800&h=600&fit=crop',
+                    'https://images.unsplash.com/photo-1560185008-b033106af5c3?w=800&h=600&fit=crop'
+                ]
+            },
+            {
+                id: 5,
+                title: { ru: 'Семейная квартира с террасой', en: 'Family apartment with terrace' },
+                city: 'spb',
+                price: 520000,
+                area: 95,
+                rooms: 3,
+                floor: 8,
+                totalFloors: 10,
+                balcony: true,
+                view: { ru: 'Вид на Неву', en: 'Neva river view' },
+                infrastructure: { ru: 'Набережная, парки, школы', en: 'Embankment, parks, schools' },
+                parking: true,
+                renovation: { ru: 'Авторский дизайн', en: 'Author design' },
+                images: [
+                    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop',
+                    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop',
+                    'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&h=600&fit=crop'
+                ]
+            }
+        ];
+
+        // Инициализация
+        function init() {
+            displayApartments(apartments);
+            updateAuthUI();
+            updateLanguage();
+        }
+
+        // Переключение языка
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'ru' ? 'en' : 'ru';
+            updateLanguage();
+            displayApartments(getFilteredApartments());
+            updateAuthUI();
+        }
+
+        function updateLanguage() {
+            const elements = document.querySelectorAll('[data-ru]');
+            elements.forEach(el => {
+                const ruText = el.getAttribute('data-ru');
+                const enText = el.getAttribute('data-en');
+                if (currentLanguage === 'ru' && ruText) {
+                    el.textContent = ruText;
+                } else if (currentLanguage === 'en' && enText) {
+                    el.textContent = enText;
+                }
+            });
+            
+            // Обновляем кнопку языка
+            const langBtn = document.getElementById('languageToggle');
+            langBtn.textContent = currentLanguage === 'ru' ? 'EN' : 'RU';
+            
+            // Обновляем заголовок
+            document.title = currentLanguage === 'ru' ? 'LuxEstate - Элитная недвижимость' : 'LuxEstate - Premium Real Estate';
+        }
+
+        // Отображение квартир
+        function displayApartments(apartmentsToShow) {
+            const grid = document.getElementById('apartmentsGrid');
+            grid.innerHTML = '';
+            
+            apartmentsToShow.forEach(apartment => {
+                const card = document.createElement('div');
+                card.className = 'apartment-card';
+                
+                const isFavorite = favorites.includes(apartment.id);
+                
+                card.innerHTML = `
+                    <img src="${apartment.images[0]}" alt="${apartment.title[currentLanguage]}" class="apartment-image">
+                    <div class="apartment-info">
+                        <h3 class="apartment-title">${apartment.title[currentLanguage]}</h3>
+                        <div class="apartment-price">$${apartment.price.toLocaleString()}</div>
+                        <div class="apartment-features">
+                            <div class="feature-item">
+                                <span class="feature-icon">📐</span>
+                                <span>${apartment.area} m²</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🚪</span>
+                                <span>${apartment.rooms} ${currentLanguage === 'ru' ? 'комн.' : 'rooms'}</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏢</span>
+                                <span>${apartment.floor}/${apartment.totalFloors} ${currentLanguage === 'ru' ? 'этаж' : 'floor'}</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">${apartment.balcony ? '🌅' : '🏠'}</span>
+                                <span>${apartment.balcony ? (currentLanguage === 'ru' ? 'Балкон' : 'Balcony') : (currentLanguage === 'ru' ? 'Без балкона' : 'No balcony')}</span>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-outline" onclick="showApartmentDetail(${apartment.id})" style="flex: 1; margin-right: 0.5rem;">
+                                ${currentLanguage === 'ru' ? 'Подробнее' : 'Details'}
+                            </button>
+                            <button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite(${apartment.id})">
+                                ${isFavorite ? '❤️' : '🤍'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('.favorite-btn') || e.target.closest('.btn')) return;
+                    showApartmentDetail(apartment.id);
+                });
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Фильтрация
+        function getFilteredApartments() {
+            const city = document.getElementById('filterCity').value;
+            const minPrice = document.getElementById('filterMinPrice').value;
+            const maxPrice = document.getElementById('filterMaxPrice').value;
+            const rooms = document.getElementById('filterRooms').value;
+            const area = document.getElementById('filterArea').value;
+            
+            return apartments.filter(apartment => {
+                if (city && apartment.city !== city) return false;
+                if (minPrice && apartment.price < minPrice) return false;
+                if (maxPrice && apartment.price > maxPrice) return false;
+                if (rooms && apartment.rooms < parseInt(rooms)) return false;
+                if (area && apartment.area < area) return false;
+                return true;
+            });
+        }
+
+        function applyFilters() {
+            const filtered = getFilteredApartments();
+            displayApartments(filtered);
+            showNotification(currentLanguage === 'ru' ? 'Фильтры применены' : 'Filters applied');
+        }
+
+        // Избранное
+        function toggleFavorite(apartmentId) {
+            const index = favorites.indexOf(apartmentId);
+            if (index > -1) {
+                favorites.splice(index, 1);
+                showNotification(currentLanguage === 'ru' ? 'Удалено из избранного' : 'Removed from favorites');
+            } else {
+                favorites.push(apartmentId);
+                showNotification(currentLanguage === 'ru' ? 'Добавлено в избранное' : 'Added to favorites');
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            displayApartments(getFilteredApartments());
+        }
+
+        function showFavorites() {
+            const favoritesList = document.getElementById('favoritesList');
+            favoritesList.innerHTML = '';
+            
+            const favoriteApartments = apartments.filter(a => favorites.includes(a.id));
+            
+            if (favoriteApartments.length === 0) {
+                favoritesList.innerHTML = `<p>${currentLanguage === 'ru' ? 'Нет избранных квартир' : 'No favorite apartments'}</p>`;
+            } else {
+                favoriteApartments.forEach(apartment => {
+                    const item = document.createElement('div');
+                    item.className = 'apartment-card';
+                    item.style.cursor = 'pointer';
+                    item.innerHTML = `
+                        <img src="${apartment.images[0]}" alt="${apartment.title[currentLanguage]}" class="apartment-image" style="height: 150px;">
+                        <div class="apartment-info">
+                            <h3 class="apartment-title">${apartment.title[currentLanguage]}</h3>
+                            <div class="apartment-price">$${apartment.price.toLocaleString()}</div>
+                            <button class="btn btn-outline" onclick="showApartmentDetail(${apartment.id})" style="width: 100%;">
+                                ${currentLanguage === 'ru' ? 'Подробнее' : 'Details'}
+                            </button>
+                        </div>
+                    `;
+                    item.addEventListener('click', () => {
+                        closeModal('favoritesModal');
+                        showApartmentDetail(apartment.id);
+                    });
+                    favoritesList.appendChild(item);
+                });
+            }
+            
+            openModal('favoritesModal');
+        }
+
+        // Детали квартиры
+        function showApartmentDetail(apartmentId) {
+            const apartment = apartments.find(a => a.id === apartmentId);
+            if (!apartment) return;
+            
+            const content = document.getElementById('apartmentDetailContent');
+            const isFavorite = favorites.includes(apartmentId);
+            
+            content.innerHTML = `
+                <div class="apartment-detail">
+                    <div class="detail-gallery">
+                        ${apartment.images.map(img => `
+                            <img src="${img}" alt="${apartment.title[currentLanguage]}" class="gallery-image" onclick="openPhotoModal('${img}')">
+                        `).join('')}
+                    </div>
+                    <div class="detail-info">
+                        <h2 style="margin-bottom: 1rem;">${apartment.title[currentLanguage]}</h2>
+                        <div class="apartment-price" style="font-size: 2rem; margin-bottom: 1.5rem;">$${apartment.price.toLocaleString()}</div>
+                        
+                        <div class="detail-features">
+                            <div><strong>${currentLanguage === 'ru' ? 'Площадь' : 'Area'}:</strong> ${apartment.area} m²</div>
+                            <div><strong>${currentLanguage === 'ru' ? 'Комнаты' : 'Rooms'}:</strong> ${apartment.rooms}</div>
+                            <div><strong>${currentLanguage === 'ru' ? 'Этаж' : 'Floor'}:</strong> ${apartment.floor}/${apartment.totalFloors}</div>
+                            <div><strong>${currentLanguage === 'ru' ? 'Балкон' : 'Balcony'}:</strong> ${apartment.balcony ? '✓' : '✗'}</div>
+                            <div><strong>${currentLanguage === 'ru' ? 'Вид' : 'View'}:</strong> ${apartment.view[currentLanguage]}</div>
+                            <div><strong>${currentLanguage === 'ru' ? 'Парковка' : 'Parking'}:</strong> ${apartment.parking ? '✓' : '✗'}</div>
+                            <div><strong>${currentLanguage === 'ru' ? 'Ремонт' : 'Renovation'}:</strong> ${apartment.renovation[currentLanguage]}</div>
+                        </div>
+                        
+                        <h3 style="margin-bottom: 0.5rem;">${currentLanguage === 'ru' ? 'Инфраструктура' : 'Infrastructure'}:</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">${apartment.infrastructure[currentLanguage]}</p>
+                        
+                        <button class="btn btn-primary" style="margin-right: 1rem;" onclick="contactAgent(${apartment.id})">
+                            ${currentLanguage === 'ru' ? 'Связаться с агентом' : 'Contact Agent'}
+                        </button>
+                        <button class="btn btn-outline" onclick="toggleFavorite(${apartment.id}); closeModal('apartmentDetailModal');">
+                            ${isFavorite ? '❤️' : '🤍'} ${isFavorite ? (currentLanguage === 'ru' ? 'В избранном' : 'Favorited') : (currentLanguage === 'ru' ? 'В избранное' : 'Add to Favorites')}
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            openModal('apartmentDetailModal');
+        }
+
+        // Фото модальное окно
+        function openPhotoModal(src) {
+            currentPhotoSrc = src;
+            currentZoom = 1;
+            const modal = document.getElementById('photoModal');
+            const img = document.getElementById('photoModalImage');
+            img.src = src;
+            img.style.transform = 'scale(1)';
+            modal.classList.add('active');
+        }
+
+        function closePhotoModal(event) {
+            if (event.target === event.currentTarget) {
+                closeModal('photoModal');
+            }
+        }
+
+        function zoomPhoto(delta) {
+            currentZoom += delta;
+            currentZoom = Math.max(0.5, Math.min(3, currentZoom));
+            const img = document.getElementById('photoModalImage');
+            img.style.transform = `scale(${currentZoom})`;
+        }
+
+        // Авторизация
+        function showAuth(mode) {
+            authMode = mode;
+            const title = document.getElementById('authTitle');
+            const submitBtn = document.getElementById('authSubmitBtn');
+            const registerFields = document.getElementById('registerFields');
+            const toggleLink = document.getElementById('authToggleLink');
+            
+            if (mode === 'login') {
+                title.textContent = currentLanguage === 'ru' ? 'Вход в систему' : 'Login';
+                submitBtn.textContent = currentLanguage === 'ru' ? 'Войти' : 'Login';
+                toggleLink.textContent = currentLanguage === 'ru' ? 'Нет аккаунта? Зарегистрируйтесь' : 'No account? Sign up';
+                registerFields.style.display = 'none';
+            } else {
+                title.textContent = currentLanguage === 'ru' ? 'Регистрация' : 'Sign Up';
+                submitBtn.textContent = currentLanguage === 'ru' ? 'Зарегистрироваться' : 'Sign Up';
+                toggleLink.textContent = currentLanguage === 'ru' ? 'Уже есть аккаунт? Войдите' : 'Already have an account? Login';
+                registerFields.style.display = 'block';
+            }
+            
+            openModal('authModal');
+        }
+
+        function toggleAuthMode(event) {
+            event.preventDefault();
+            showAuth(authMode === 'login' ? 'register' : 'login');
+        }
+
+        function handleAuth(event) {
+            event.preventDefault();
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
+            const name = document.getElementById('authName').value;
+            
+            if (authMode === 'register') {
+                if (!name) {
+                    showNotification(currentLanguage === 'ru' ? 'Введите имя' : 'Enter your name');
+                    return;
+                }
+                currentUser = { email, name, favorites: [] };
+                localStorage.setItem('user', JSON.stringify(currentUser));
+                showNotification(currentLanguage === 'ru' ? 'Регистрация успешна!' : 'Registration successful!');
+            } else {
+                const savedUser = JSON.parse(localStorage.getItem('user') || 'null');
+                if (savedUser && savedUser.email === email) {
+                    currentUser = savedUser;
+                    showNotification(currentLanguage === 'ru' ? 'Вход выполнен!' : 'Login successful!');
+                } else {
+                    showNotification(currentLanguage === 'ru' ? 'Неверный email или пароль' : 'Invalid email or password');
+                    return;
+                }
+            }
+            
+            closeModal('authModal');
+            updateAuthUI();
+        }
+
+        function updateAuthUI() {
+            const authButtons = document.querySelector('.auth-buttons');
+            if (currentUser) {
+                authButtons.innerHTML = `
+                    <span style="color: var(--text-primary); font-weight: 600;">${currentUser.name || currentUser.email}</span>
+                    <button class="btn btn-outline" onclick="logout()">${currentLanguage === 'ru' ? 'Выйти' : 'Logout'}</button>
+                `;
+            } else {
+                authButtons.innerHTML = `
+                    <button class="btn btn-outline" onclick="showAuth('login')" data-ru="Войти" data-en="Login">${currentLanguage === 'ru' ? 'Войти' : 'Login'}</button>
+                    <button class="btn btn-primary" onclick="showAuth('register')" data-ru="Регистрация" data-en="Sign Up">${currentLanguage === 'ru' ? 'Регистрация' : 'Sign Up'}</button>
+                `;
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('user');
+            updateAuthUI();
+            showNotification(currentLanguage === 'ru' ? 'Вы вышли из системы' : 'You have been logged out');
+        }
+
+        // Вспомогательные функции
+        function contactAgent(apartmentId) {
+            const apartment = apartments.find(a => a.id === apartmentId);
+            showNotification(currentLanguage === 'ru' ? 
+                `Заявка отправлена! Мы свяжемся с вами по поводу: ${apartment.title.ru}` : 
+                `Request sent! We will contact you about: ${apartment.title.en}`);
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Обработчики событий
+        document.getElementById('languageToggle').addEventListener('click', toggleLanguage);
+
+        // Закрытие модальных окон по клику вне контента
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
